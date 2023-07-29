@@ -17,4 +17,4 @@ void main()
    scanf("%d",&n);
    printf("\nThe original number is : %d",n);
    rev(n);
- 
+ }
