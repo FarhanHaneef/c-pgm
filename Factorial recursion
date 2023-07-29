@@ -12,3 +12,4 @@ void main()
   printf("Enter the number :-");
   scanf("%d",&n);
   printf("\nFactorial = %d",fact(n));
+}
