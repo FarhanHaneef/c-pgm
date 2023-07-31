@@ -1,0 +1,22 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main ()
+{
+FILE *fp;
+char name [20], str[100];
+printf( "Enter the file name - ") ;
+scanf ( "%s" , name) ;
+fp=fopen (name, "w" ) ;
+if (fp == NULL)
+{
+printf ( "File is not created") ;
+}
+printf ( "File created successfully\n) ;
+printf ( "Enter the details : -\n");
+scanf ( "%s", str) ;
+fprintf (fp, "%s", str) ;
+fscanf (fp, "%s", str) ;
+printf( "The contents are :-%s\n",str) ;
+fclose (fp) ;
+return 0;
+}
