@@ -1,0 +1,17 @@
+#include <stdio.h>
+int swap (int a,int b);
+{
+int temp = a;
+a = b;
+b = temp;
+}
+ void main()
+{
+int x, y;
+paintf(" enter the number"); scanf("%d %d", &x, &y);
+paint f ("Before swapping:x=%d\t
+y = %d \n",x,y);
+Swap (x,y);
+printf("After swaping:  x = %d\t
+ Y= %d\n", xy );
+}
