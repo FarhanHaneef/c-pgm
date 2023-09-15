@@ -1,0 +1,9 @@
+import java.util.Arrays;
+class seclar
+{
+ public static void main(String args[])
+{
+ int arr[]={2,10,8,9};
+Arrays.sort(arr);
+System.out.println("2nd largest number is "+arr[2]);
+}} 
