@@ -1,0 +1,141 @@
+```python
+import speech_recognition as sr
+from gtts import gTTS
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# Initialize speech recognition
+recognizer = sr.Recognizer()
+
+# Initialize text-to-speech
+def speak(text):
+    tts = gTTS(text)
+    tts.save("output.mp3")
+    # Use a suitable audio player to play the audio file, e.g., "mpg321" on Linux
+    # You may need to install the audio player and specify the correct path
+    # Example: os.system("mpg321 output.mp3")
+
+# Configure email details (replace with your own)
+smtp_host = "smtp.example.com"
+sender_email = "your_email@example.com"
+sender_password = "your_password"
+recipient_email = "recipient@example.com"
+
+# Start speech recognition
+print("Say 'Compose new email to recipient' to start composing an email...")
+
+while True:
+    with sr.Microphone() as source:
+        print("Listening...")
+        audio = recognizer.listen(source)
+    
+    try:
+        speech_result = recognizer.recognize_google(audio)
+        print("You said: " + speech_result)
+
+        if "Compose new email to" in speech_result:
+            # Extract recipient from speech command
+            recipient = speech_result.replace("Compose new email to", "").strip()
+
+            # Prompt user for email content
+            speak("What's the subject of your email?")
+            subject_audio = recognizer.listen(source)
+            subject = recognizer.recognize_google(subject_audio)
+
+            speak("Please dictate the email content.")
+            email_content_audio = recognizer.listen(source)
+            email_content = recognizer.recognize_google(email_content_audio)
+
+            # Send the email
+            message = MIMEMultipart()
+            message["From"] = sender_email
+            message["To"] = recipient_email
+            message["Subject"] = subject
+            message.attach(MIMEText(email_content, "plain"))
+
+            server = smtplib.SMTP(smtp_host, 587)
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, recipient_email, message.as_string())
+            server.quit()
+
+            speak("Your email has been sent successfully.")
+    
+    except sr.UnknownValueError:
+        print("Could not understand audio.")
+    except sr.RequestError as e:
+        print("Could not request results; {0}".format(e))
+    except smtplib.SMTPException as e:
+        print("Email sending error: {0}".format(e))
+``````python
+import speech_recognition as sr
+from gtts import gTTS
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# Initialize speech recognition
+recognizer = sr.Recognizer()
+
+# Initialize text-to-speech
+def speak(text):
+    tts = gTTS(text)
+    tts.save("output.mp3")
+    # Use a suitable audio player to play the audio file, e.g., "mpg321" on Linux
+    # You may need to install the audio player and specify the correct path
+    # Example: os.system("mpg321 output.mp3")
+
+# Configure email details (replace with your own)
+smtp_host = "smtp.example.com"
+sender_email = "your_email@example.com"
+sender_password = "your_password"
+recipient_email = "recipient@example.com"
+
+# Start speech recognition
+print("Say 'Compose new email to recipient' to start composing an email...")
+
+while True:
+    with sr.Microphone() as source:
+        print("Listening...")
+        audio = recognizer.listen(source)
+    
+    try:
+        speech_result = recognizer.recognize_google(audio)
+        print("You said: " + speech_result)
+
+        if "Compose new email to" in speech_result:
+            # Extract recipient from speech command
+            recipient = speech_result.replace("Compose new email to", "").strip()
+
+            # Prompt user for email content
+            speak("What's the subject of your email?")
+            subject_audio = recognizer.listen(source)
+            subject = recognizer.recognize_google(subject_audio)
+
+            speak("Please dictate the email content.")
+            email_content_audio = recognizer.listen(source)
+            email_content = recognizer.recognize_google(email_content_audio)
+
+            # Send the email
+            message = MIMEMultipart()
+            message["From"] = sender_email
+            message["To"] = recipient_email
+            message["Subject"] = subject
+            message.attach(MIMEText(email_content, "plain"))
+
+            server = smtplib.SMTP(smtp_host, 587)
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, recipient_email, message.as_string())
+            server.quit()
+
+            speak("Your email has been sent successfully.")
+    
+    except sr.UnknownValueError:
+        print("Could not understand audio.")
+    except sr.RequestError as e:
+        print("Could not request results; {0}".format(e))
+    except smtplib.SMTPException as e:
+        print("Email sending error: {0}".format(e))
+```
